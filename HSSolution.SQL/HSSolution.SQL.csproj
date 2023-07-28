@@ -9,9 +9,6 @@
     <ProjectGuid>{E3F5A546-2CC0-4A8A-9C9E-C4B5F50DEA51}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HSSolution.SQL</RootNamespace>
-    <AssemblyName>HSSolution.SQL</AssemblyName>
-    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
