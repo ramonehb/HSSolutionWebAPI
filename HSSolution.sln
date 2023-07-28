@@ -14,6 +14,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HSSolution.SQL", "HSSolution.SQL", "{C370FA2E-7131-4BDC-943F-9AF129D63260}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Function", "Function", "{4DBC50DE-5EDE-4245-A8E2-77457E635996}"
+	ProjectSection(SolutionItems) = preProject
+		FunctionGetDateLocal.sql = FunctionGetDateLocal.sql
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "View", "View", "{6559AA81-7251-4D4A-B399-768EEE2AEA24}"
 EndProject
