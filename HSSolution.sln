@@ -11,29 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HSSolution.Persistence", "H
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HSSolution.Domain", "HSSolution.Domain\HSSolution.Domain.csproj", "{B7624698-77BE-46C3-885C-E330F762F1BE}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HSSolution.SQL", "HSSolution.SQL", "{C370FA2E-7131-4BDC-943F-9AF129D63260}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Function", "Function", "{4DBC50DE-5EDE-4245-A8E2-77457E635996}"
-	ProjectSection(SolutionItems) = preProject
-		FunctionGetDateLocal.sql = FunctionGetDateLocal.sql
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "View", "View", "{6559AA81-7251-4D4A-B399-768EEE2AEA24}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Trigger", "Trigger", "{813ABEB1-42F0-41F1-AD3A-49AD2B570DC4}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Procedure", "Procedure", "{1D03D245-0439-4C2E-9664-A5C0F3705E17}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Structure", "Structure", "{0CD0F674-E874-4819-B1E0-C6CD63A6A4B0}"
-	ProjectSection(SolutionItems) = preProject
-		CreateTableUsuarioPerfil.sql = CreateTableUsuarioPerfil.sql
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Populating", "Populating", "{DCC00C11-B77F-4AE5-BA96-830B73A3B159}"
-	ProjectSection(SolutionItems) = preProject
-		InsertUsuarioPerfil.sql = InsertUsuarioPerfil.sql
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,14 +36,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{4DBC50DE-5EDE-4245-A8E2-77457E635996} = {C370FA2E-7131-4BDC-943F-9AF129D63260}
-		{6559AA81-7251-4D4A-B399-768EEE2AEA24} = {C370FA2E-7131-4BDC-943F-9AF129D63260}
-		{813ABEB1-42F0-41F1-AD3A-49AD2B570DC4} = {C370FA2E-7131-4BDC-943F-9AF129D63260}
-		{1D03D245-0439-4C2E-9664-A5C0F3705E17} = {C370FA2E-7131-4BDC-943F-9AF129D63260}
-		{0CD0F674-E874-4819-B1E0-C6CD63A6A4B0} = {C370FA2E-7131-4BDC-943F-9AF129D63260}
-		{DCC00C11-B77F-4AE5-BA96-830B73A3B159} = {C370FA2E-7131-4BDC-943F-9AF129D63260}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F8B44418-E221-4470-9A4E-6ACAA5956A92}
