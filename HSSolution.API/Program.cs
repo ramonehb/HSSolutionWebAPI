@@ -14,6 +14,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<IUsuarioApplication, UsuarioApplication>();
 builder.Services.AddScoped<IUsuarioPersist, UsuarioPersist>();
 builder.Services.AddScoped<IGeralPersist, GeralPersist>();
+builder.Services.AddScoped<IPerfilApplitcation, PerfilApplication>();
+builder.Services.AddScoped<IPerfilPersist, PerfilPersist>();
 
 builder.Services.AddDbContext<BaseDataContext>(options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionStringSQLServer"), 

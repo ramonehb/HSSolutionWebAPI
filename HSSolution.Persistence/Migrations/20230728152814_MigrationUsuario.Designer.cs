@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HSSolution.Persistence.Migrations
 {
     [DbContext(typeof(BaseDataContext))]
-    [Migration("20230728050931_MigrationUsuario")]
+    [Migration("20230728152814_MigrationUsuario")]
     partial class MigrationUsuario
     {
         /// <inheritdoc />

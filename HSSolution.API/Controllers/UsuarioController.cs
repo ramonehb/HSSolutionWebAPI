@@ -17,7 +17,7 @@ public class UsuarioController : ControllerBase
     /// <summary>
     /// Obter todos os usuários
     /// </summary>
-    /// <returns>Dados do evento</returns>
+    /// <returns>Dados dos usuário</returns>
     /// <response code="200"></response>
     /// <response code="204"></response>
     /// <response code="500"></response>
