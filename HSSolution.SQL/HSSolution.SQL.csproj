@@ -43,8 +43,17 @@
     <Reference Include="Microsoft.Analytics.Types" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Populating\InsertUsuarioPerfil.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Function\" />
+    <Folder Include="Procedure\" />
+    <Folder Include="Structure\" />
+    <Folder Include="Trigger\" />
+    <Folder Include="View\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
