@@ -1,7 +1,10 @@
-﻿namespace HSSolution.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace HSSolution.Domain;
 
 public class Usuario
 {
+    [Key]
     public int ID_Usuario { get; set; }
     public int ID_Perfil { get; set; }
     public string Nome { get; set; }
@@ -18,17 +21,5 @@ public class Usuario
     public DateTime DT_Expiracao { get; set; }
     public int NR_Tentativa { get; set; }
     public DateTime DT_UltimaTentativa { get; set; }
-
-    public Usuario(int idUsuario,int idPerfil, string nome, string cpf, string email, string login, string senha)
-    {
-        ID_Usuario = idUsuario;
-        ID_Perfil = idPerfil;
-        Nome = nome;
-        NR_CPF = cpf;
-        Email = email;
-        Login = login;
-        Senha = senha;
-    }
-
 }
 

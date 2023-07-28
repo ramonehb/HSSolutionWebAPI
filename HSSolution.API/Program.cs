@@ -1,9 +1,23 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using HSSolution.Application;
+using HSSolution.Application.Interfaces;
+using HSSolution.Persistence;
+using HSSolution.Persistence.Context;
+using HSSolution.Persistence.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddScoped<IUsuarioApplication, UsuarioApplication>();
+builder.Services.AddScoped<IUsuarioPersist, UsuarioPersist>();
+builder.Services.AddScoped<IGeralPersist, GeralPersist>();
+
+builder.Services.AddDbContext<BaseDataContext>(options => 
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionStringSQLServer"), 
+    options => options.EnableRetryOnFailure()));
 
 builder.Services.AddSwaggerGen(s =>
 {
