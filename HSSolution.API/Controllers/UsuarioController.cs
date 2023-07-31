@@ -1,4 +1,6 @@
-﻿using HSSolution.Application.Interfaces;
+﻿using AutoMapper;
+using HSSolution.Application.Interfaces;
+using HSSolution.Domain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HSSolution.API.Controllers;
@@ -7,11 +9,15 @@ namespace HSSolution.API.Controllers;
 [Route("api/[controller]")]
 public class UsuarioController : ControllerBase
 {
+    private readonly IMapper _mapper;
+
     private readonly IUsuarioApplication _usuarioApplication;
 
-    public UsuarioController(IUsuarioApplication usuarioApplication)
+    public UsuarioController(IUsuarioApplication usuarioApplication, IMapper mapper)
     {
-        _usuarioApplication = usuarioApplication;   
+        _usuarioApplication = usuarioApplication;
+        _mapper = mapper;
+
     }
 
     /// <summary>
@@ -61,7 +67,8 @@ public class UsuarioController : ControllerBase
                 var usuario = await _usuarioApplication.GetUsuarioByIdAsync(idUsuario);
                 if (usuario is null) return NoContent();
 
-                return Ok(usuario);
+                var usuarioViewModel = _mapper.Map<UsuarioViewModel>(usuario);
+                return Ok(usuarioViewModel);
             }
             catch (Exception e)
             {
@@ -73,5 +80,6 @@ public class UsuarioController : ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar recuperar usuário por id.\nErro: {ex.Message}");
         }
     }
+
 }
 

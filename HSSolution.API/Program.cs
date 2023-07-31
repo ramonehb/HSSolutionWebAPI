@@ -5,6 +5,7 @@ using HSSolution.Application.Interfaces;
 using HSSolution.Persistence;
 using HSSolution.Persistence.Context;
 using HSSolution.Persistence.Interfaces;
+using HSSolution.Application.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,7 @@ builder.Services.AddScoped<IUsuarioPersist, UsuarioPersist>();
 builder.Services.AddScoped<IGeralPersist, GeralPersist>();
 builder.Services.AddScoped<IPerfilApplitcation, PerfilApplication>();
 builder.Services.AddScoped<IPerfilPersist, PerfilPersist>();
+builder.Services.AddAutoMapper(typeof(UsuarioProfile));
 
 builder.Services.AddDbContext<BaseDataContext>(options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionStringSQLServer"), 

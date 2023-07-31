@@ -4,6 +4,19 @@ namespace HSSolution.Domain;
 
 public class Usuario
 {
+    protected Usuario() { }
+
+    public Usuario(int iD_Usuario, string nome, string nR_CPF, string email, string nR_Telefone, DateTime dT_Nascimento)
+    {
+        ID_Usuario = iD_Usuario;
+        Nome = nome;
+        NR_CPF = nR_CPF;
+        Email = email;
+        NR_Telefone = nR_Telefone;
+        DT_Nascimento = dT_Nascimento;
+        DT_Cadastro = DateTime.Now;
+    }
+
     [Key]
     public int ID_Usuario { get; set; }
     public int ID_Perfil { get; set; }
