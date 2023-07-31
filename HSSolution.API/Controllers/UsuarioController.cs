@@ -38,7 +38,9 @@ public class UsuarioController : ControllerBase
             var usuarios = await _usuarioApplication.GetUsuariosAsync();
             if (usuarios is null) return NoContent();
 
-            return Ok(usuarios);
+            var usuarioViewModel = _mapper.Map<List<UsuarioViewModel>>(usuarios);
+
+            return Ok(usuarioViewModel);
         }
         catch (Exception ex)
         {
