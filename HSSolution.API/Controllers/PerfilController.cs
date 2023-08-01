@@ -37,7 +37,7 @@ public class PerfilController : ControllerBase
         }
         catch (Exception ex)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar recuperar todos os usuários.\nErro: {ex.Message}");
+            return StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar recuperar todos os perfis.\nErro: {ex.Message}");
         }
     }
 

@@ -64,7 +64,7 @@ public class UsuarioController : ControllerBase
         }
         catch (Exception e)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar recuperar Usuário por Id.\nErro: {e.Message}");
+            return StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar recuperar usuário por Id.\nErro: {e.Message}");
         }   
     }
 }

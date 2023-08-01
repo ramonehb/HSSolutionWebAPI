@@ -16,7 +16,7 @@ public class UsuarioInputModel
 
     [Required(ErrorMessage = "O campo e-mail é obrigatório ")]
     [EmailAddress(ErrorMessage = "Informe um e-mail válido."),
-        StringLength(100, MinimumLength = 3, ErrorMessage = "O e-mail deve ter no mínimo 5 ou no máximo 100 carecteres.")]
+        StringLength(100, MinimumLength = 5, ErrorMessage = "O e-mail deve ter no mínimo 5 ou no máximo 100 carecteres.")]
     public string Email { get; set; }
 
     [Phone(ErrorMessage = "O campo telefone está com número inválido.")]
