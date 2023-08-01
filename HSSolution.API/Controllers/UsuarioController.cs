@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using HSSolution.Application.Interfaces;
-using HSSolution.Domain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HSSolution.API.Controllers;

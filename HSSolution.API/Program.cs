@@ -5,7 +5,6 @@ using HSSolution.Application.Interfaces;
 using HSSolution.Persistence;
 using HSSolution.Persistence.Context;
 using HSSolution.Persistence.Interfaces;
-using HSSolution.Application.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
