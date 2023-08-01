@@ -1,17 +1,13 @@
 ﻿using HSSolution.Application.Interfaces;
 using HSSolution.Domain;
 using HSSolution.Persistence.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HSSolution.Application;
 
 public class PerfilApplication : IPerfilApplitcation
 {
     private readonly IPerfilPersist _perfilPersist;
+
     public PerfilApplication(IPerfilPersist perfil)
     {
         _perfilPersist = perfil;

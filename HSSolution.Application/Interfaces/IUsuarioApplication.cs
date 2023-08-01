@@ -10,7 +10,7 @@ public interface IUsuarioApplication
 
     Task<bool> DeleteUsuario(int idUsuario);
 
-    Task<List<UsuarioViewModel>?> GetUsuariosAsync();
+    Task<UsuarioViewModel[]?> GetUsuariosAsync();
 
     Task<UsuarioViewModel?> GetUsuarioByIdAsync(int idUsuario);
 }

@@ -18,6 +18,7 @@ public class UsuarioApplication : IUsuarioApplication
         _usuarioPersist = usuarioPersist;   
         _mapper = mapper;
     }
+
     public async Task<UsuarioViewModel?> GetUsuarioByIdAsync(int idUsuario)
     {
         try
@@ -36,7 +37,7 @@ public class UsuarioApplication : IUsuarioApplication
         }
     }
 
-    public async Task<List<UsuarioViewModel>?> GetUsuariosAsync()
+    public async Task<UsuarioViewModel[]?> GetUsuariosAsync()
     {
         try
         {
@@ -44,7 +45,7 @@ public class UsuarioApplication : IUsuarioApplication
             if (usuarios == null)
                 return null;
 
-            var usuarioViewModel = _mapper.Map<List<UsuarioViewModel>>(usuarios);
+            var usuarioViewModel = _mapper.Map <UsuarioViewModel[]>(usuarios);
 
             return usuarioViewModel;
         }
