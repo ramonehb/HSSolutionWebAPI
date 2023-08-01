@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace HSSolution.API;
+namespace HSSolution.Persistence;
 
 public static class Criptografia
 {
