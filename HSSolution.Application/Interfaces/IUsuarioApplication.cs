@@ -1,17 +1,17 @@
-﻿using HSSolution.Domain;
+﻿using HSSolution.Application.Dtos;
 
 namespace HSSolution.Application.Interfaces;
 
 public interface IUsuarioApplication
 {
-    Task<Usuario?> AddUsuario(Usuario inputModelUsuario);
+    Task<UsuarioViewModel?> AddUsuario(UsuarioInputModel inputModelUsuario);
 
-    Task<Usuario?> UpdateUsuario(int idUsuario, Usuario inputModelUsuario);
+    Task<UsuarioViewModel?> UpdateUsuario(int idUsuario, UsuarioInputModel inputModelUsuario);
 
     Task<bool> DeleteUsuario(int idUsuario);
 
-    Task<Usuario[]?> GetUsuariosAsync();
+    Task<List<UsuarioViewModel>?> GetUsuariosAsync();
 
-    Task<Usuario?> GetUsuarioByIdAsync(int idUsuario);
+    Task<UsuarioViewModel?> GetUsuarioByIdAsync(int idUsuario);
 }
 

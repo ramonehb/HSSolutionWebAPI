@@ -17,7 +17,7 @@ builder.Services.AddScoped<IUsuarioPersist, UsuarioPersist>();
 builder.Services.AddScoped<IGeralPersist, GeralPersist>();
 builder.Services.AddScoped<IPerfilApplitcation, PerfilApplication>();
 builder.Services.AddScoped<IPerfilPersist, PerfilPersist>();
-builder.Services.AddAutoMapper(typeof(UsuarioProfile));
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddDbContext<BaseDataContext>(options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionStringSQLServer"), 

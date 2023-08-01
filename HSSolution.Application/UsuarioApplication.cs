@@ -1,5 +1,6 @@
-﻿using HSSolution.Application.Interfaces;
-using HSSolution.Domain;
+﻿using AutoMapper;
+using HSSolution.Application.Dtos;
+using HSSolution.Application.Interfaces;
 using HSSolution.Persistence.Interfaces;
 
 namespace HSSolution.Application;
@@ -9,13 +10,15 @@ public class UsuarioApplication : IUsuarioApplication
 
     private readonly IGeralPersist _geralPersist;
     private readonly IUsuarioPersist _usuarioPersist;
+    private readonly IMapper _mapper;
 
-    public UsuarioApplication(IGeralPersist geralPersist, IUsuarioPersist usuarioPersist)
+    public UsuarioApplication(IGeralPersist geralPersist, IUsuarioPersist usuarioPersist, IMapper mapper)
     {
         _geralPersist = geralPersist;
         _usuarioPersist = usuarioPersist;   
+        _mapper = mapper;
     }
-    public async Task<Usuario?> GetUsuarioByIdAsync(int idUsuario)
+    public async Task<UsuarioViewModel?> GetUsuarioByIdAsync(int idUsuario)
     {
         try
         {
@@ -23,7 +26,9 @@ public class UsuarioApplication : IUsuarioApplication
             if (usuario == null)
                 return null;
 
-            return usuario;
+            var usuarioViewModel = _mapper.Map<UsuarioViewModel>(usuario);
+
+            return usuarioViewModel;
         }
         catch (Exception ex)
         {
@@ -31,7 +36,7 @@ public class UsuarioApplication : IUsuarioApplication
         }
     }
 
-    public async Task<Usuario[]?> GetUsuariosAsync()
+    public async Task<List<UsuarioViewModel>?> GetUsuariosAsync()
     {
         try
         {
@@ -39,7 +44,9 @@ public class UsuarioApplication : IUsuarioApplication
             if (usuarios == null)
                 return null;
 
-            return usuarios;
+            var usuarioViewModel = _mapper.Map<List<UsuarioViewModel>>(usuarios);
+
+            return usuarioViewModel;
         }
         catch (Exception ex)
         {
@@ -47,7 +54,7 @@ public class UsuarioApplication : IUsuarioApplication
         }
     }
 
-    public async Task<Usuario?> AddUsuario(Usuario inputModelUsuario)
+    public async Task<UsuarioViewModel?> AddUsuario(UsuarioInputModel inputModelUsuario)
     {
         try
         {
@@ -57,7 +64,7 @@ public class UsuarioApplication : IUsuarioApplication
             {
                 var usuarioRetorno = await _usuarioPersist.GetUsuarioByIdAsync(inputModelUsuario.ID_Usuario);
 
-                return usuarioRetorno;
+                return _mapper.Map<UsuarioViewModel>(usuarioRetorno);
             }
 
             return null;
@@ -86,7 +93,7 @@ public class UsuarioApplication : IUsuarioApplication
         }
     }
 
-    public async Task<Usuario?> UpdateUsuario(int idUsuario, Usuario inputModelUsuario)
+    public async Task<UsuarioViewModel?> UpdateUsuario(int idUsuario, UsuarioInputModel inputModelUsuario)
     {
         try
         {
@@ -99,7 +106,8 @@ public class UsuarioApplication : IUsuarioApplication
             if (await _geralPersist.SaveChangeAsync())
             {
                 var usuarioRetorno = await _usuarioPersist.GetUsuarioByIdAsync(inputModelUsuario.ID_Usuario);
-                return usuarioRetorno;
+
+                return _mapper.Map<UsuarioViewModel>(usuarioRetorno);
             }
 
             return null;

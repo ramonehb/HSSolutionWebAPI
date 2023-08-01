@@ -1,20 +1,15 @@
 ﻿using AutoMapper;
+using HSSolution.Application.Dtos;
 using HSSolution.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace HSSolution.Application.Helpers
+namespace HSSolution.Application.Helpers;
+
+public class UsuarioProfile : Profile
 {
-    public class UsuarioProfile : Profile
+    public UsuarioProfile() 
     {
-        public UsuarioProfile() 
-        {
-            CreateMap<UsuarioInputModel, Usuario>();
+        CreateMap<UsuarioInputModel, Usuario>().ReverseMap();
 
-            CreateMap<Usuario, UsuarioViewModel>();
-        }
+        CreateMap<Usuario, UsuarioViewModel>().ReverseMap();
     }
 }
