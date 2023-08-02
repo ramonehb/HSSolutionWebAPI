@@ -1,10 +1,13 @@
+using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Microsoft.IdentityModel.Tokens;
 using HSSolution.Application;
 using HSSolution.Application.Interfaces;
 using HSSolution.Persistence;
 using HSSolution.Persistence.Context;
 using HSSolution.Persistence.Interfaces;
+using Swashbuckle.AspNetCore.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,9 +38,9 @@ builder.Services.AddDbContext<BaseDataContext>(options =>
 #endregion
 
 #region Swagger
-builder.Services.AddSwaggerGen(s =>
+builder.Services.AddSwaggerGen(options =>
 {
-    s.SwaggerDoc("v1", new OpenApiInfo
+    options.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
         Title = "HSSolution.API",
@@ -48,12 +51,35 @@ builder.Services.AddSwaggerGen(s =>
         }
     });
 
+    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey
+    });
+
+    options.OperationFilter<SecurityRequirementsOperationFilter>();
+
     var xmlFile = "HSSolution.API.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-    s.IncludeXmlComments(xmlPath);
-    s.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+    options.IncludeXmlComments(xmlPath);
+    options.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
 });
 
+#endregion
+
+#region JWT
+
+builder.Services.AddAuthentication().AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        ValidateAudience = false,
+        ValidateIssuer = false,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("AppSettings:Token").Value!))
+    };
+});
 #endregion
 
 var app = builder.Build();

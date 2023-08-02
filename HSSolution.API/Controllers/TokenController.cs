@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text;
 
 namespace HSSolution.API.Controllers;
@@ -55,19 +54,13 @@ public class TokenController : ControllerBase
     {
         var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.Name, userName)
+            new Claim(ClaimTypes.Name, userName),
+            new Claim(ClaimTypes.Role, "Admin"),
+            new Claim(ClaimTypes.Role, "User")
         };
 
-        var tokenKey = _configuration.GetSection("AppSettings:Token").Value!;
-
-        if (string.IsNullOrEmpty(tokenKey))
-        {
-            tokenKey = GerarChaveAleatoria();
-            _configuration.GetSection("AppSettings:Token").Value = tokenKey;
-        }
-
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenKey));
-
+        var secretKey = _configuration.GetSection("AppSettings:Token").Value!;
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
         var token = new JwtSecurityToken(
@@ -77,14 +70,5 @@ public class TokenController : ControllerBase
             );
 
         return new JwtSecurityTokenHandler().WriteToken(token);
-    }
-
-    private string GerarChaveAleatoria()
-    {
-        using RNGCryptoServiceProvider provider = new();
-
-        var keyBytes = new byte[16];
-        provider.GetBytes(keyBytes);
-        return Convert.ToBase64String(keyBytes);
     }
 }

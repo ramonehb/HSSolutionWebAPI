@@ -1,9 +1,11 @@
 ﻿using HSSolution.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HSSolution.API.Controllers;
 
 [ApiController]
+[Authorize(Roles = "Admin, User")]
 [Route("api/perfil")]
 public class PerfilController : ControllerBase
 {

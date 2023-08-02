@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using HSSolution.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HSSolution.API.Controllers;
 
 [ApiController]
+[Authorize(Roles = "Admin, User")]
 [Route("api/usuario")]
 public class UsuarioController : ControllerBase
 {
@@ -48,15 +50,19 @@ public class UsuarioController : ControllerBase
     /// <returns>Dados do usuário</returns>
     /// <response code="200"></response>
     /// <response code="204"></response>
+    /// /// <response code="400"></response>
     /// /// <response code="500"></response>
     [HttpGet("id")]
     [ProducesResponseType(200)]
     [ProducesResponseType(204)]
+    [ProducesResponseType(400)]
     [ProducesResponseType(500)]
     public async Task<IActionResult> GetUsuarioById(int idUsuario)
     {
         try
         {
+            if (idUsuario == 0) return BadRequest("Informe o id do usuário para buscar.");
+
             var usuario = await _usuarioApplication.GetUsuarioByIdAsync(idUsuario);
             if (usuario is null) return NoContent();
 
