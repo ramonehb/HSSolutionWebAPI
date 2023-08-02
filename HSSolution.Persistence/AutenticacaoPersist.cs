@@ -1,4 +1,5 @@
-﻿using HSSolution.Persistence.Context;
+﻿using HSSolution.Domain;
+using HSSolution.Persistence.Context;
 using HSSolution.Persistence.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,9 +14,20 @@ public class AutenticacaoPersist : IAutenticacaoPersist
         _context = context;
     }
 
-    public bool AutenticaUsuario(string userName, string password)
+    public async Task<Usuario?> AutenticaUsuario(string userName, string password)
     {
-        return _context.Usuarios
-            .Any(u => u.Login == userName && u.Senha == Criptografia.Hash(password) && u.FL_Habilitado);
+        //var bExisteUsuario = _context.Usuarios.Any(u => u.Login == userName && u.Senha == Criptografia.Hash(password) && u.FL_Habilitado);
+        var bExisteUsuario = _context.Usuarios.Any(u => u.Login == userName && u.Senha == password && u.FL_Habilitado);
+
+        if (bExisteUsuario)
+        {
+            var usuario =  _context.Usuarios
+                .AsNoTracking()
+                .SingleOrDefaultAsync(u => u.Login == userName && u.Senha == password);
+
+            return await usuario;
+        }
+
+        return null;
     }
 }

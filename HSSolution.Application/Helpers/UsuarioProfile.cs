@@ -8,7 +8,7 @@ public class UsuarioProfile : Profile
 {
     public UsuarioProfile() 
     {
-        CreateMap<UsuarioInputModel, Usuario>().ReverseMap();
+        CreateMap<Usuario, UsuarioInputModel>().ReverseMap();
 
         CreateMap<Usuario, UsuarioViewModel>().ReverseMap();
     }

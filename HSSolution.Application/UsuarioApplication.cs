@@ -24,8 +24,7 @@ public class UsuarioApplication : IUsuarioApplication
         try
         {
             var usuario = await _usuarioPersist.GetUsuarioByIdAsync(idUsuario);
-            if (usuario == null)
-                return null;
+            if (usuario == null) return null;
 
             var usuarioViewModel = _mapper.Map<UsuarioViewModel>(usuario);
 
@@ -42,8 +41,7 @@ public class UsuarioApplication : IUsuarioApplication
         try
         {
             var usuarios = await _usuarioPersist.GetUsuariosAsync();
-            if (usuarios == null)
-                return null;
+            if (usuarios == null) return null;
 
             var usuarioViewModel = _mapper.Map <UsuarioViewModel[]>(usuarios);
 
@@ -81,8 +79,7 @@ public class UsuarioApplication : IUsuarioApplication
         try
         {
             var usuario = await _usuarioPersist.GetUsuarioByIdAsync(idUsuario);
-            if (usuario == null) 
-                throw new Exception("Usuário não encontrado.");
+            if (usuario == null) throw new Exception("Usuário não encontrado.");
 
             _geralPersist.Delete(usuario);
 
@@ -99,8 +96,7 @@ public class UsuarioApplication : IUsuarioApplication
         try
         {
             var usuario = await _usuarioPersist.GetUsuarioByIdAsync(idUsuario);
-            if (usuario is null) 
-                return null;
+            if (usuario is null) return null;
 
             _geralPersist.Update(usuario);
 

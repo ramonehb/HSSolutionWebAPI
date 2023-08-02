@@ -11,17 +11,30 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
+#region Application
 builder.Services.AddScoped<IUsuarioApplication, UsuarioApplication>();
-builder.Services.AddScoped<IUsuarioPersist, UsuarioPersist>();
-builder.Services.AddScoped<IGeralPersist, GeralPersist>();
+builder.Services.AddScoped<IAutenticacaoApplication, AutenticacaoApplication>();
 builder.Services.AddScoped<IPerfilApplitcation, PerfilApplication>();
+#endregion
+
+#region Persist
+builder.Services.AddScoped<IUsuarioPersist, UsuarioPersist>();
+builder.Services.AddScoped<IAutenticacaoPersist, AutenticacaoPersist>();
 builder.Services.AddScoped<IPerfilPersist, PerfilPersist>();
+builder.Services.AddScoped<IGeralPersist, GeralPersist>();
+#endregion
+
+#region AutoMapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+#endregion
 
-builder.Services.AddDbContext<BaseDataContext>(options => 
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionStringSQLServer"), 
+#region Connection SQLServer
+builder.Services.AddDbContext<BaseDataContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionStringSQLServer"),
     options => options.EnableRetryOnFailure()));
+#endregion
 
+#region Swagger
 builder.Services.AddSwaggerGen(s =>
 {
     s.SwaggerDoc("v1", new OpenApiInfo
@@ -40,6 +53,8 @@ builder.Services.AddSwaggerGen(s =>
     s.IncludeXmlComments(xmlPath);
     s.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
 });
+
+#endregion
 
 var app = builder.Build();
 

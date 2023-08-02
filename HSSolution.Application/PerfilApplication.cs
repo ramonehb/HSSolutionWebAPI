@@ -18,8 +18,7 @@ public class PerfilApplication : IPerfilApplitcation
         try
         {
             var perfils = await _perfilPersist.GetPerfilsAsync();
-            if (perfils.Count() == 0)
-                return null;
+            if (perfils.Count() == 0) return null;
 
             return perfils;
         }

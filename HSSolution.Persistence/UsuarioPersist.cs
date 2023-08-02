@@ -16,20 +16,11 @@ public class UsuarioPersist : IUsuarioPersist
 
     public async Task<Usuario?> GetUsuarioByIdAsync(int idUsuario)
     {
-        IQueryable<Usuario> usuario = _context.Usuarios;
+        var usuario = _context.Usuarios
+            .AsNoTracking()
+            .SingleOrDefaultAsync(u => u.ID_Usuario == idUsuario);
 
-        usuario = usuario.AsNoTracking().Where(u => u.ID_Usuario == idUsuario);
-
-        return await usuario.FirstOrDefaultAsync();
-    }
-
-    public Usuario? GetUsuarioByUserName(string username, string password)
-    {
-        IQueryable<Usuario> usuario = _context.Usuarios;
-
-        usuario = usuario.AsNoTracking().Where(u => u.Login == username && u.Senha == Criptografia.Hash(password));
-
-        return usuario.FirstOrDefault();
+        return await usuario;
     }
 
     public async Task<Usuario[]> GetUsuariosAsync()

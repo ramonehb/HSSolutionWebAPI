@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HSSolution.API.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/perfil")]
 public class PerfilController : ControllerBase
 {
     private readonly IPerfilApplitcation _perfilApplication;
@@ -30,8 +30,7 @@ public class PerfilController : ControllerBase
         try
         {
             var perfils = await _perfilApplication.GetPerfilsAsync();
-            if (perfils is null) 
-                return NoContent();
+            if (perfils is null) return NoContent();
 
             return Ok(perfils);
         }
@@ -40,6 +39,5 @@ public class PerfilController : ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar recuperar todos os perfis.\nErro: {ex.Message}");
         }
     }
-
 }
 

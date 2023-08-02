@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HSSolution.API.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/usuario")]
 public class UsuarioController : ControllerBase
 {
     private readonly IUsuarioApplication _usuarioApplication;
