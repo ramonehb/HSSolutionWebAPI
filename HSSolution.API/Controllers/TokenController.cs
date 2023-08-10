@@ -1,4 +1,5 @@
-﻿using HSSolution.Application.Dtos;
+﻿using HSSolution.API.Dtos;
+using HSSolution.Application.Dtos;
 using HSSolution.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -36,9 +37,9 @@ public class TokenController : ControllerBase
     {
         try
         {
-            var usuario = await _autenticacaoApplication.AutenticacaoUsuario(autenticacaoInputModel);
+            (UsuarioViewModel usuario, string mensagem) = await _autenticacaoApplication.AutenticacaoUsuario(autenticacaoInputModel);
 
-            if (usuario == null) return NotFound("Usuário não encontrado");
+            if (usuario == null) return NotFound(mensagem);
 
             var token = CriarToken(autenticacaoInputModel.Username);
 
@@ -50,7 +51,7 @@ public class TokenController : ControllerBase
         }
     }
 
-    private string CriarToken(string userName)
+    private TokenDTO CriarToken(string userName)
     {
         var claims = new List<Claim>
         {
@@ -69,6 +70,11 @@ public class TokenController : ControllerBase
                 signingCredentials: creds
             );
 
-        return $"bearer {new JwtSecurityTokenHandler().WriteToken(token)}";
+        return new TokenDTO
+        {
+            usuario = userName,
+            validoAte = token.ValidTo,
+            token = $"bearer {new JwtSecurityTokenHandler().WriteToken(token)}"
+        }; 
     }
 }

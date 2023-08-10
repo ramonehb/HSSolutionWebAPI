@@ -2,12 +2,15 @@
 
 public class UsuarioViewModel
 {
-    public int ID_Usuario { get; set; }
-    public string Nome { get; set; }
-    public string NR_CPF { get; set; }
-    public string Email { get; set; }
-    public string NR_Telefone { get; set; }
-    public DateTime DT_Nascimento { get; set; }
-    public DateTime DT_Cadastro { get; set; }
+    public int idUsuario { get; set; }
+    public string nome { get; set; }
+    public string cpf { get; set; }
+    public string login { get; set; }
+    public string email { get; set; }
+    public string telefone { get; set; }
+    public DateTime dtNascimento { get; set; }
+    public DateTime dtCadastro { get; set; }
+    public DateTime dtExpiracao { get; set; }
+    public bool flHabilitado { get; set; }
 
 }

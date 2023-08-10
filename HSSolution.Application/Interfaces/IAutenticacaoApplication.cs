@@ -1,9 +1,10 @@
 ﻿using HSSolution.Application.Dtos;
+using HSSolution.Domain;
 
 namespace HSSolution.Application.Interfaces;
 
 public interface IAutenticacaoApplication
 {
-    Task<bool?> AutenticacaoUsuario(AutenticacaoInputModel autenticacaoInputModel);
+    Task<(UsuarioViewModel?, string)> AutenticacaoUsuario(AutenticacaoInputModel autenticacaoInputModel);
 }
 

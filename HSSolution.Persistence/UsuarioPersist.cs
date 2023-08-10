@@ -18,15 +18,27 @@ public class UsuarioPersist : IUsuarioPersist
     {
         var usuario = _context.Usuarios
             .AsNoTracking()
-            .SingleOrDefaultAsync(u => u.ID_Usuario == idUsuario);
+            .SingleOrDefaultAsync(u => u.IdUsuario == idUsuario);
 
         return await usuario;
     }
 
     public async Task<Usuario[]> GetUsuariosAsync()
     {
-        var usuarios = _context.Usuarios.ToArrayAsync();
+        var usuarios = _context.Usuarios
+            .AsNoTracking()
+            .ToArrayAsync();
 
         return await usuarios;
+    }
+
+    public async Task<Usuario?> GetLastUsuarioAsync()
+    {
+        var usuario = _context.Usuarios
+            .AsNoTracking()
+            .OrderByDescending(u => u.IdUsuario)
+            .Take(1);
+        
+        return await usuario.FirstOrDefaultAsync();
     }
 }

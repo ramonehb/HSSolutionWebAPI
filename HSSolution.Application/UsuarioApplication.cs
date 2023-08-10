@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HSSolution.Application.Dtos;
 using HSSolution.Application.Interfaces;
+using HSSolution.Domain;
 using HSSolution.Persistence.Interfaces;
 
 namespace HSSolution.Application;
@@ -57,11 +58,16 @@ public class UsuarioApplication : IUsuarioApplication
     {
         try
         {
-            _geralPersist.Add(inputModelUsuario);
+            var usuario = _mapper.Map<Usuario>(inputModelUsuario);
+            usuario.DtCadastro = DateTime.Now;
+            usuario.DtExpiracao = DateTime.Now.AddYears(1);
+            usuario.NrUltimoAcesso = 0;
+
+            _geralPersist.Add(usuario);
 
             if (await _geralPersist.SaveChangeAsync())
             {
-                var usuarioRetorno = await _usuarioPersist.GetUsuarioByIdAsync(inputModelUsuario.ID_Usuario);
+                var usuarioRetorno = await _usuarioPersist.GetUsuarioByIdAsync(usuario.IdUsuario);
 
                 return _mapper.Map<UsuarioViewModel>(usuarioRetorno);
             }
@@ -102,7 +108,7 @@ public class UsuarioApplication : IUsuarioApplication
 
             if (await _geralPersist.SaveChangeAsync())
             {
-                var usuarioRetorno = await _usuarioPersist.GetUsuarioByIdAsync(inputModelUsuario.ID_Usuario);
+                var usuarioRetorno = await _usuarioPersist.GetUsuarioByIdAsync(idUsuario);
 
                 return _mapper.Map<UsuarioViewModel>(usuarioRetorno);
             }

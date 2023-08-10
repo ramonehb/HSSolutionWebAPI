@@ -1,5 +1,7 @@
-﻿using HSSolution.Application.Dtos;
+﻿using AutoMapper;
+using HSSolution.Application.Dtos;
 using HSSolution.Application.Interfaces;
+using HSSolution.Domain;
 using HSSolution.Persistence.Interfaces;
 
 namespace HSSolution.Application;
@@ -7,20 +9,25 @@ namespace HSSolution.Application;
 public class AutenticacaoApplication : IAutenticacaoApplication
 {
     private readonly IAutenticacaoPersist _autenticacaoPersist;
+    private readonly IMapper _mapper;
 
-    public AutenticacaoApplication(IAutenticacaoPersist autenticacaoPersist)
+    public AutenticacaoApplication(IAutenticacaoPersist autenticacaoPersist,IMapper mapper)
     {
         _autenticacaoPersist = autenticacaoPersist;
+        _mapper = mapper;
     }
 
-    public async Task<bool?> AutenticacaoUsuario(AutenticacaoInputModel autenticacaoInputModel)
+    public async Task<(UsuarioViewModel?, string)> AutenticacaoUsuario(AutenticacaoInputModel autenticacaoInputModel)
     {
         try
         {
-            var usuario = await _autenticacaoPersist.AutenticaUsuario(autenticacaoInputModel.Username, autenticacaoInputModel.Password);
-            if (usuario == null) return null;
+            (Usuario usuario, string mensagem) = await _autenticacaoPersist.AutenticaUsuario(autenticacaoInputModel.Username, autenticacaoInputModel.Password);
 
-            return usuario is not null;
+            if (usuario == null) return (null, mensagem);
+
+            var usuarioViewModel = _mapper.Map<UsuarioViewModel>(usuario);
+
+            return (usuarioViewModel, mensagem);
         }
         catch (Exception ex)
         {

@@ -4,6 +4,6 @@ namespace HSSolution.Persistence.Interfaces;
 
 public interface IAutenticacaoPersist
 {
-    Task<Usuario?> AutenticaUsuario(string userName, string password);
+    Task<(Usuario?, string)> AutenticaUsuario(string userName, string password);
 }
 

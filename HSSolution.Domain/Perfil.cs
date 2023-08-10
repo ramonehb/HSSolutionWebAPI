@@ -1,11 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace HSSolution.Domain;
 
-public class Perfil
+public partial class Perfil
 {
     [Key]
-    public int ID_Perfil { get; set; }
-    public string NM_Descricao { get; set; }
-}
+    public int IdPerfil { get; set; }
 
+    public string? NmDescricao { get; set; }
+
+    public virtual ICollection<Usuario> Usuarios { get; set; } = new List<Usuario>();
+}

@@ -14,20 +14,35 @@ public class AutenticacaoPersist : IAutenticacaoPersist
         _context = context;
     }
 
-    public async Task<Usuario?> AutenticaUsuario(string userName, string password)
-    {
-        //var bExisteUsuario = _context.Usuarios.Any(u => u.Login == userName && u.Senha == Criptografia.Hash(password) && u.FL_Habilitado);
-        var bExisteUsuario = _context.Usuarios.Any(u => u.Login == userName && u.Senha == password && u.FL_Habilitado);
+    public async Task<(Usuario?, string)> AutenticaUsuario(string userName, string password)
+    {       
+        var usuarios = await _context.Usuarios
+            .AsNoTracking()
+            .Where(u => u.Login == userName && u.Senha == password)
+            .ToArrayAsync();
 
-        if (bExisteUsuario)
+        if (usuarios.Count() == 1)
         {
-            var usuario =  _context.Usuarios
-                .AsNoTracking()
-                .SingleOrDefaultAsync(u => u.Login == userName && u.Senha == password);
-
-            return await usuario;
+            return (usuarios.Single(), "Usuário localizado com sucesso.");
         }
+        else if (usuarios.Count() > 1)
+        {
+            var habilitados = usuarios.Where(u => (u.FlHabilitado ?? false) == true);
+            if (habilitados.Count() == 0)
+            {
+                return (null,"Usuário desabilitado, contate o administrador.");
+            }
+            else if (habilitados.Count() > 1)
+            {
+                return (null, "Multiplus usuários, contate o administrador.");
+            }
+            else
+            {
+                return (habilitados.Single(), "Usuário localizado com sucesso.");
+            }
+        }
+        
 
-        return null;
+        return (null, "Usuário não localizado.");
     }
 }
