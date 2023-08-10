@@ -27,10 +27,12 @@ public class TokenController : ControllerBase
     /// <returns>Dados de autenticação</returns>
     /// <response code="200"></response>
     /// <response code="404"></response>
+    /// <response code="422"></response>
     /// <response code="500"></response>
     [HttpPost]
     [ProducesResponseType(200)]
     [ProducesResponseType(404)]
+    [ProducesResponseType(422)]
     [ProducesResponseType(500)]
     public async Task<IActionResult> Autenticacao(TokenInputModel tokenInputModel)
     {
