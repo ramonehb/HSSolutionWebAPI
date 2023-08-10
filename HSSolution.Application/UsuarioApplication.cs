@@ -63,6 +63,7 @@ public class UsuarioApplication : IUsuarioApplication
             usuario.DtExpiracao = DateTime.Now.AddYears(1);
             usuario.NrUltimoAcesso = 0;
             usuario.FlHabilitado = true;
+            usuario.IdPerfilNavigationIdPerfil = inputModelUsuario.idPerfil;
 
             _geralPersist.Add(usuario);
 

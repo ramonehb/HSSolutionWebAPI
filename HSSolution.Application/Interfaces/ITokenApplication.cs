@@ -4,6 +4,6 @@ namespace HSSolution.Application.Interfaces;
 
 public interface ITokenApplication
 {
-    Task<(UsuarioViewModel?, string, int)> AutenticacaoUsuario(AutenticacaoInputModel autenticacaoInputModel);
+    Task<(UsuarioViewModel?, string, int)> AutenticacaoUsuario(TokenInputModel autenticacaoInputModel);
 }
 

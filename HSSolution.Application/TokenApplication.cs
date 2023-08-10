@@ -8,20 +8,20 @@ namespace HSSolution.Application;
 
 public class TokenApplication : ITokenApplication
 {
-    private readonly ITokenPersist _autenticacaoPersist;
+    private readonly ITokenPersist _tokenPersist;
     private readonly IMapper _mapper;
 
-    public TokenApplication(ITokenPersist autenticacaoPersist,IMapper mapper)
+    public TokenApplication(ITokenPersist tokenPersist, IMapper mapper)
     {
-        _autenticacaoPersist = autenticacaoPersist;
+        _tokenPersist = tokenPersist;
         _mapper = mapper;
     }
 
-    public async Task<(UsuarioViewModel?, string, int)> AutenticacaoUsuario(AutenticacaoInputModel autenticacaoInputModel)
+    public async Task<(UsuarioViewModel?, string, int)> AutenticacaoUsuario(TokenInputModel tokenInputModel)
     {
         try
         {
-            (Usuario usuario, string mensagem, int statusCode) = await _autenticacaoPersist.AutenticaUsuario(autenticacaoInputModel.Username, autenticacaoInputModel.Password);
+            (Usuario usuario, string mensagem, int statusCode) = await _tokenPersist.AutenticaUsuario(tokenInputModel.Username, tokenInputModel.Password);
 
             if (usuario == null) return (null, mensagem, statusCode);
 

@@ -32,11 +32,11 @@ public class TokenController : ControllerBase
     [ProducesResponseType(200)]
     [ProducesResponseType(404)]
     [ProducesResponseType(500)]
-    public async Task<IActionResult> Autenticacao(AutenticacaoInputModel autenticacaoInputModel)
+    public async Task<IActionResult> Autenticacao(TokenInputModel tokenInputModel)
     {
         try
         {
-            (UsuarioViewModel usuario, string mensagem, int statusCode) = await _tokenApplication.AutenticacaoUsuario(autenticacaoInputModel);
+            (UsuarioViewModel usuario, string mensagem, int statusCode) = await _tokenApplication.AutenticacaoUsuario(tokenInputModel);
 
             if (usuario == null)
             {
@@ -47,7 +47,7 @@ public class TokenController : ControllerBase
                 };
             }
 
-            var token = CriarToken(autenticacaoInputModel.Username);
+            var token = CriarToken(tokenInputModel.Username);
 
             return Ok(token);
         }
