@@ -62,6 +62,7 @@ public class UsuarioApplication : IUsuarioApplication
             usuario.DtCadastro = DateTime.Now;
             usuario.DtExpiracao = DateTime.Now.AddYears(1);
             usuario.NrUltimoAcesso = 0;
+            usuario.FlHabilitado = true;
 
             _geralPersist.Add(usuario);
 
