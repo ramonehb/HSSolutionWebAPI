@@ -43,7 +43,8 @@ public class TokenController : ControllerBase
                 return statusCode switch
                 {
                     422 => UnprocessableEntity(mensagem),
-                    404 => NotFound(mensagem)
+                    404 => NotFound(mensagem),
+                    _ => StatusCode(500, "erro interno")
                 };
             }
 
