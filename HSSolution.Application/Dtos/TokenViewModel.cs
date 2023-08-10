@@ -1,6 +1,6 @@
-﻿namespace HSSolution.API.Dtos
+﻿namespace HSSolution.Application.Dtos
 {
-    public class TokenDTO
+    public class TokenViewModel
     {
         public string usuario { get; set; }
         public DateTime validoAte { get; set; }

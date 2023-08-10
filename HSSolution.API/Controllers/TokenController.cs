@@ -1,5 +1,4 @@
-﻿using HSSolution.API.Dtos;
-using HSSolution.Application.Dtos;
+﻿using HSSolution.Application.Dtos;
 using HSSolution.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -51,7 +50,7 @@ public class TokenController : ControllerBase
         }
     }
 
-    private TokenDTO CriarToken(string userName)
+    private TokenViewModel CriarToken(string userName)
     {
         var claims = new List<Claim>
         {
@@ -70,7 +69,7 @@ public class TokenController : ControllerBase
                 signingCredentials: creds
             );
 
-        return new TokenDTO
+        return new TokenViewModel
         {
             usuario = userName,
             validoAte = token.ValidTo,
