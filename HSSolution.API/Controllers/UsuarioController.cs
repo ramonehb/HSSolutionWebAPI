@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using HSSolution.Application.Dtos;
+﻿using HSSolution.Application.Dtos;
 using HSSolution.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -50,19 +49,19 @@ public class UsuarioController : ControllerBase
     /// <param name="idUsuario">Identificador do usuário</param>
     /// <returns>Dados do usuário</returns>
     /// <response code="200"></response>
-    /// <response code="400"></response>
     /// <response code="404"></response>
+    /// <response code="422"></response>
     /// <response code="500"></response>
     [HttpGet("id")]
     [ProducesResponseType(200)]
-    [ProducesResponseType(400)]
     [ProducesResponseType(404)]
+    [ProducesResponseType(422)]
     [ProducesResponseType(500)]
     public async Task<IActionResult> GetUsuarioById(int idUsuario)
     {
         try
         {
-            if (idUsuario == 0) return BadRequest("Informe o id do usuário para buscar.");
+            if (idUsuario == 0) return UnprocessableEntity("Informe o id do usuário para buscar.");
 
             var usuario = await _usuarioApplication.GetUsuarioByIdAsync(idUsuario);
             if (usuario is null) return NotFound("Usuário não localizado.");
@@ -100,6 +99,45 @@ public class UsuarioController : ControllerBase
             if (usuarioCadastrado == null) return NoContent();
 
             return Ok(usuarioCadastrado);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar gravar o usuário.\nErro: {ex.Message}");
+        }
+    }
+
+    /// <summary>
+    /// Exclusão de usuário por id
+    /// </summary>
+    /// <param name="idUsuario">Identificador do usuário</param>
+    /// <returns>Dados do usuário</returns>
+    /// <response code="200"></response>
+    /// <response code="404"></response>
+    /// <response code="422"></response>
+    /// <response code="500"></response>
+    [HttpDelete("idUsuario")]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(404)]
+    [ProducesResponseType(422)]
+    [ProducesResponseType(500)]
+
+    public async Task<ActionResult> DeletarUsuario(int idUsuario)
+    {
+        try
+        {
+            if (idUsuario == 0)
+            {
+                return UnprocessableEntity("Informe o id do usuário para deletar.");
+            }
+
+           var bUsuarioDeletado = await _usuarioApplication.DeleteUsuario(idUsuario);
+
+            if (!bUsuarioDeletado)
+            {
+                return NotFound("Usuário não encontrado.");
+            }
+
+            return Ok("Usuário excluído com sucesso.");
         }
         catch (Exception ex)
         {

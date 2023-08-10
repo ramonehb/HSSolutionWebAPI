@@ -86,7 +86,7 @@ public class UsuarioApplication : IUsuarioApplication
         try
         {
             var usuario = await _usuarioPersist.GetUsuarioByIdAsync(idUsuario);
-            if (usuario == null) throw new Exception("Usuário não encontrado.");
+            if (usuario == null) return false;
 
             _geralPersist.Delete(usuario);
 

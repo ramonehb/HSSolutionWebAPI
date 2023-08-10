@@ -16,13 +16,13 @@ builder.Services.AddEndpointsApiExplorer();
 
 #region Application
 builder.Services.AddScoped<IUsuarioApplication, UsuarioApplication>();
-builder.Services.AddScoped<IAutenticacaoApplication, AutenticacaoApplication>();
+builder.Services.AddScoped<ITokenApplication, TokenApplication>();
 builder.Services.AddScoped<IPerfilApplitcation, PerfilApplication>();
 #endregion
 
 #region Persist
 builder.Services.AddScoped<IUsuarioPersist, UsuarioPersist>();
-builder.Services.AddScoped<IAutenticacaoPersist, AutenticacaoPersist>();
+builder.Services.AddScoped<ITokenPersist, TokenPersist>();
 builder.Services.AddScoped<IPerfilPersist, PerfilPersist>();
 builder.Services.AddScoped<IGeralPersist, GeralPersist>();
 #endregion

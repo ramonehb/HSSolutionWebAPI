@@ -5,16 +5,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HSSolution.Persistence;
 
-public class AutenticacaoPersist : IAutenticacaoPersist
+public class TokenPersist : ITokenPersist
 {
     private readonly BaseDataContext _context;
 
-    public AutenticacaoPersist(BaseDataContext context)
+    public TokenPersist(BaseDataContext context)
     {
         _context = context;
     }
 
-    public async Task<(Usuario?, string)> AutenticaUsuario(string userName, string password)
+    public async Task<(Usuario?, string, int)> AutenticaUsuario(string userName, string password)
     {       
         var usuarios = await _context.Usuarios
             .AsNoTracking()
@@ -23,26 +23,26 @@ public class AutenticacaoPersist : IAutenticacaoPersist
 
         if (usuarios.Count() == 1)
         {
-            return (usuarios.Single(), "Usuário localizado com sucesso.");
+            return (usuarios.Single(), "Usuário localizado com sucesso.", 200);
         }
         else if (usuarios.Count() > 1)
         {
             var habilitados = usuarios.Where(u => (u.FlHabilitado ?? false) == true);
             if (habilitados.Count() == 0)
             {
-                return (null,"Usuário desabilitado, contate o administrador.");
+                return (null,"Usuário desabilitado, contate o administrador.", 422);
             }
             else if (habilitados.Count() > 1)
             {
-                return (null, "Multiplus usuários, contate o administrador.");
+                return (null, "Multiplus usuários, contate o administrador.", 422);
             }
             else
             {
-                return (habilitados.Single(), "Usuário localizado com sucesso.");
+                return (habilitados.Single(), "Usuário localizado com sucesso.", 200);
             }
         }
         
 
-        return (null, "Usuário não localizado.");
+        return (null, "Usuário não localizado.", 404);
     }
 }

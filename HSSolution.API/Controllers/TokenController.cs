@@ -12,12 +12,12 @@ namespace HSSolution.API.Controllers;
 [Route("api/token")]
 public class TokenController : ControllerBase
 {
-    private readonly IAutenticacaoApplication _autenticacaoApplication;
+    private readonly ITokenApplication _tokenApplication;
     private readonly IConfiguration _configuration;
 
-    public TokenController(IAutenticacaoApplication autenticacaoApplication, IConfiguration configuration)
+    public TokenController(ITokenApplication autenticacaoApplication, IConfiguration configuration)
     {
-        _autenticacaoApplication = autenticacaoApplication;
+        _tokenApplication = autenticacaoApplication;
         _configuration = configuration;
     }
 
@@ -36,9 +36,16 @@ public class TokenController : ControllerBase
     {
         try
         {
-            (UsuarioViewModel usuario, string mensagem) = await _autenticacaoApplication.AutenticacaoUsuario(autenticacaoInputModel);
+            (UsuarioViewModel usuario, string mensagem, int statusCode) = await _tokenApplication.AutenticacaoUsuario(autenticacaoInputModel);
 
-            if (usuario == null) return NotFound(mensagem);
+            if (usuario == null)
+            {
+                return statusCode switch
+                {
+                    422 => UnprocessableEntity(mensagem),
+                    404 => NotFound(mensagem)
+                };
+            }
 
             var token = CriarToken(autenticacaoInputModel.Username);
 

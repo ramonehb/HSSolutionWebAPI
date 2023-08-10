@@ -31,14 +31,4 @@ public class UsuarioPersist : IUsuarioPersist
 
         return await usuarios;
     }
-
-    public async Task<Usuario?> GetLastUsuarioAsync()
-    {
-        var usuario = _context.Usuarios
-            .AsNoTracking()
-            .OrderByDescending(u => u.IdUsuario)
-            .Take(1);
-        
-        return await usuario.FirstOrDefaultAsync();
-    }
 }

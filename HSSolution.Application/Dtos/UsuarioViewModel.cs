@@ -12,5 +12,4 @@ public class UsuarioViewModel
     public DateTime dtCadastro { get; set; }
     public DateTime dtExpiracao { get; set; }
     public bool flHabilitado { get; set; }
-
 }
