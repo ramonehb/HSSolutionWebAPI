@@ -15,9 +15,9 @@ public class TokenController : ControllerBase
     private readonly ITokenApplication _tokenApplication;
     private readonly IConfiguration _configuration;
 
-    public TokenController(ITokenApplication autenticacaoApplication, IConfiguration configuration)
+    public TokenController(ITokenApplication tokenApplication, IConfiguration configuration)
     {
-        _tokenApplication = autenticacaoApplication;
+        _tokenApplication = tokenApplication;
         _configuration = configuration;
     }
 
