@@ -36,7 +36,7 @@ public class TokenController : ControllerBase
     {
         try
         {
-            (UsuarioViewModel usuario, string mensagem, int statusCode) = await _tokenApplication.AutenticacaoUsuario(tokenInputModel);
+            (UsuarioViewModel? usuario, string mensagem, int statusCode) = await _tokenApplication.AutenticacaoUsuario(tokenInputModel);
 
             if (usuario == null)
             {

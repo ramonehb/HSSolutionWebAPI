@@ -21,7 +21,7 @@ public class TokenApplication : ITokenApplication
     {
         try
         {
-            (Usuario usuario, string mensagem, int statusCode) = await _tokenPersist.AutenticaUsuario(tokenInputModel.Username, tokenInputModel.Password);
+            (Usuario? usuario, string mensagem, int statusCode) = await _tokenPersist.AutenticaUsuario(tokenInputModel.Username, tokenInputModel.Password);
 
             if (usuario == null) return (null, mensagem, statusCode);
 
