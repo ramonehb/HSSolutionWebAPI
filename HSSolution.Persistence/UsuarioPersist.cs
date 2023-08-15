@@ -31,4 +31,9 @@ public class UsuarioPersist : IUsuarioPersist
 
         return await usuarios;
     }
+
+    public async Task<bool> ExistsProfile(int idPerfil)
+    {
+        return await _context.Perfils.AnyAsync(p => p.IdPerfil == idPerfil);
+    }
 }

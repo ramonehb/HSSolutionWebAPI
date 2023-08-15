@@ -46,7 +46,7 @@ public class TokenController : ControllerBase
                 {
                     422 => UnprocessableEntity(mensagem),
                     404 => NotFound(mensagem),
-                    _ => StatusCode(500, "erro interno")
+                    _ => StatusCode(500, "Erro interno")
                 };
             }
 

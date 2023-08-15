@@ -13,5 +13,7 @@ public interface IUsuarioApplication
     Task<UsuarioViewModel[]?> GetUsuariosAsync();
 
     Task<UsuarioViewModel?> GetUsuarioByIdAsync(int idUsuario);
+
+    Task<bool> ValidaPerfil(int idPerfil);
 }
 

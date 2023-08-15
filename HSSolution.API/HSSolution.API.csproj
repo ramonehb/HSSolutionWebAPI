@@ -29,8 +29,4 @@
     <ProjectReference Include="..\HSSolution.Persistence\HSSolution.Persistence.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Functions\" />
-  </ItemGroup>
-
 </Project>

@@ -2,7 +2,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace HSSolution.Application.Functions;
+namespace HSSolution.Application;
 
 public static class Functions
 {

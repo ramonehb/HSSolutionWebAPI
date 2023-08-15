@@ -122,5 +122,19 @@ public class UsuarioApplication : IUsuarioApplication
             throw new Exception($"Erro: {ex.Message}");
         }
     }
+
+    public async Task<bool> ValidaPerfil(int idPerfil)
+    {
+        try
+        {
+            var bExistePerfil = await _usuarioPersist.ExistsProfile(idPerfil);
+
+            return bExistePerfil;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Erro: {ex.Message}");
+        }
+    }
 }
 
