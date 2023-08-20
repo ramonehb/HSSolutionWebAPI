@@ -31,7 +31,7 @@ public class TokenApplication : ITokenApplication
         }
         catch (Exception ex)
         {
-            throw new Exception($"Erro: {ex.Message}");
+            throw new Exception(ex.Message);
         }
     }
 }

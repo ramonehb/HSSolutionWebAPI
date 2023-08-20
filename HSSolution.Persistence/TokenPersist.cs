@@ -8,10 +8,12 @@ namespace HSSolution.Persistence;
 public class TokenPersist : ITokenPersist
 {
     private readonly BaseDataContext _context;
+    private readonly IGeralPersist _geralPersit;
 
-    public TokenPersist(BaseDataContext context)
+    public TokenPersist(BaseDataContext context, IGeralPersist geralPersit)
     {
         _context = context;
+        _geralPersit = geralPersit;
     }
 
     public async Task<(Usuario?, string, int)> AutenticaUsuario(string userName, string password)
@@ -23,7 +25,18 @@ public class TokenPersist : ITokenPersist
 
         if (usuarios.Count() == 1)
         {
-            return (usuarios.Single(), "Usuário localizado com sucesso.", 200);
+            var usuario = usuarios.Single();
+            usuario.NrUltimoAcesso++;
+            usuario.DtUltimoAcesso = DateTime.Now;
+
+            _geralPersit.Update(usuario);
+
+            if (await _geralPersit.SaveChangeAsync())
+            {
+                return (usuario, "Usuário localizado com sucesso.", 200);
+            }
+
+            return (null, "Erro ao atualizar usuário.", 500);
         }
         else if (usuarios.Count() > 1)
         {
@@ -38,10 +51,20 @@ public class TokenPersist : ITokenPersist
             }
             else
             {
-                return (habilitados.Single(), "Usuário localizado com sucesso.", 200);
+                var usuario = usuarios.Single();
+                usuario.NrUltimoAcesso++;
+                usuario.DtUltimoAcesso = DateTime.Now;
+
+                _geralPersit.Update(usuario);
+
+                if (await _geralPersit.SaveChangeAsync())
+                {
+                    return (usuario, "Usuário localizado com sucesso.", 200);
+                }
+
+                return (null, "Erro ao atualizar usuário.", 500);
             }
         }
-        
 
         return (null, "Usuário não localizado.", 404);
     }

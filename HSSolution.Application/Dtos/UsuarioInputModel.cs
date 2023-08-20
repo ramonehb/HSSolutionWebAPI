@@ -23,9 +23,7 @@ public class UsuarioInputModel
     [Required(ErrorMessage = "O campo login é obrigatório")]
     public required string login { get; set; }
 
-
-    [Required(ErrorMessage = "O campo senha é obrigatório")]
-    public required string senha { get; set; }
+    public string? senha { get; set; }
 
     [Required(ErrorMessage = "O campo e-mail é obrigatório ")]
     [EmailAddress(ErrorMessage = "Informe um e-mail válido."),
@@ -33,8 +31,8 @@ public class UsuarioInputModel
     public required string email { get; set; }
 
     [Phone(ErrorMessage = "O campo telefone está com número inválido.")]
-    public string telefone { get; set; }
+    public string? telefone { get; set; }
 
-    public DateTime dtNascimento { get; set; }
+    public DateTime? dtNascimento { get; set; }
 
 }

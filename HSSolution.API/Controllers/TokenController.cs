@@ -62,28 +62,35 @@ public class TokenController : ControllerBase
 
     private TokenViewModel CriarToken(string userName)
     {
-        var claims = new List<Claim>
+        try
         {
-            new Claim(ClaimTypes.Name, userName),
-            new Claim(ClaimTypes.Role, "Admin"),
-            new Claim(ClaimTypes.Role, "User")
-        };
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, userName),
+                new Claim(ClaimTypes.Role, "Admin"),
+                new Claim(ClaimTypes.Role, "User")
+            };
 
-        var secretKey = _configuration.GetSection("AppSettings:Token").Value!;
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+            var secretKey = _configuration.GetSection("AppSettings:Token").Value!;
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
-        var token = new JwtSecurityToken(
-                claims: claims,
-                expires: DateTime.Now.AddDays(1),
-                signingCredentials: creds
+            var token = new JwtSecurityToken(
+                    claims: claims,
+                    expires: DateTime.Now.AddDays(1),
+                    signingCredentials: creds
             );
 
-        return new TokenViewModel
+            return new TokenViewModel
+            {
+                usuario = userName,
+                validoAte = token.ValidTo,
+                token = $"bearer {new JwtSecurityTokenHandler().WriteToken(token)}"
+            };
+        }
+        catch (Exception ex)
         {
-            usuario = userName,
-            validoAte = token.ValidTo,
-            token = $"bearer {new JwtSecurityTokenHandler().WriteToken(token)}"
-        }; 
+            throw new Exception(ex.Message);
+        }
     }
 }

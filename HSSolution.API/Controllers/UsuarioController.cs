@@ -53,7 +53,7 @@ public class UsuarioController : ControllerBase
     /// <response code="404"></response>
     /// <response code="422"></response>
     /// <response code="500"></response>
-    [HttpGet("id")]
+    [HttpGet("{idUsuario}")]
     [ProducesResponseType(200)]
     [ProducesResponseType(404)]
     [ProducesResponseType(422)]
@@ -69,9 +69,9 @@ public class UsuarioController : ControllerBase
 
             return Ok(usuario);
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar recuperar usuário por Id.\nErro: {e.Message}");
+            return StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar recuperar usuário por Id.\nErro: {ex.Message}");
         }   
     }
 
@@ -85,7 +85,7 @@ public class UsuarioController : ControllerBase
     /// <response code="400"></response>
     /// <response code="422"></response>
     /// <response code="500"></response>
-    [HttpPost("usuario")]
+    [HttpPost("{usuario}")]
     [ProducesResponseType(200)]
     [ProducesResponseType(400)]
     [ProducesResponseType(422)]
@@ -99,6 +99,8 @@ public class UsuarioController : ControllerBase
 
             if (bExistePerfil)
             {
+                if (string.IsNullOrEmpty(usuarioInputModel.senha)) return UnprocessableEntity("O campo senha é obrigatório");
+
                 var usuarioCadastrado = await _usuarioApplication.AddUsuario(usuarioInputModel);
 
                 if (usuarioCadastrado == null) return UnprocessableEntity("Erro ao cadastrar usuário.");
@@ -116,7 +118,7 @@ public class UsuarioController : ControllerBase
 
 
     /// <summary>
-    /// Exclusão de usuário por id
+    /// Excluir usuário por id
     /// </summary>
     /// <param name="idUsuario">Identificador do usuário</param>
     /// <returns>Dados do usuário</returns>
@@ -124,7 +126,7 @@ public class UsuarioController : ControllerBase
     /// <response code="404"></response>
     /// <response code="422"></response>
     /// <response code="500"></response>
-    [HttpDelete("idUsuario")]
+    [HttpDelete("{idUsuario}")]
     [ProducesResponseType(200)]
     [ProducesResponseType(404)]
     [ProducesResponseType(422)]
@@ -151,6 +153,39 @@ public class UsuarioController : ControllerBase
         catch (Exception ex)
         {
             return StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar excluir o usuário.\nErro: {ex.Message}");
+        }
+    }
+
+    /// <summary>
+    /// Atualizar usuário
+    /// </summary>
+    /// <param name="idUsuario">Identificador do usuário</param>
+    /// <param name="usuarioInputModel">Model do usuário</param>
+    /// <returns>Dados do usuário</returns>
+    /// <response code="200"></response>
+    /// <response code="400"></response>
+    /// <response code="422"></response>
+    /// <response code="500"></response>
+    [HttpPut("{idUsuario}/{usuarioInputModel}")]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(400)]
+    [ProducesResponseType(422)]
+    [ProducesResponseType(500)]
+    public async Task<ActionResult<UsuarioViewModel>> AtualizarUsuario(int idUsuario, UsuarioInputModel usuarioInputModel)
+    {
+        try
+        {
+            if (idUsuario == 0) return UnprocessableEntity("Informe o id do usuário para buscar.");
+
+            var usuario = await _usuarioApplication.UpdateUsuario(idUsuario, usuarioInputModel);
+
+            if (usuario is null) return NotFound("Usuário não localizado.");
+
+            return Ok(usuario);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar atualizar usuário.\nErro: {ex.Message}");
         }
     }
 }

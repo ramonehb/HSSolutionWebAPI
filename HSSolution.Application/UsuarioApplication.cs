@@ -33,7 +33,7 @@ public class UsuarioApplication : IUsuarioApplication
         }
         catch (Exception ex)
         {
-            throw new Exception($"Erro: {ex.Message}");
+            throw new Exception(ex.Message);
         }
     }
 
@@ -50,7 +50,7 @@ public class UsuarioApplication : IUsuarioApplication
         }
         catch (Exception ex)
         {
-            throw new Exception($"Erro: {ex.Message}");
+            throw new Exception(ex.Message);
         }
     }
 
@@ -78,7 +78,7 @@ public class UsuarioApplication : IUsuarioApplication
         }
         catch (Exception ex)
         {
-            throw new Exception($"Erro: {ex.Message}");
+            throw new Exception(ex.Message);
         }
     }
 
@@ -95,7 +95,7 @@ public class UsuarioApplication : IUsuarioApplication
         }
         catch (Exception ex)
         {
-            throw new Exception($"Erro: {ex.Message}");
+            throw new Exception(ex.Message);
         }
     }
 
@@ -104,7 +104,16 @@ public class UsuarioApplication : IUsuarioApplication
         try
         {
             var usuario = await _usuarioPersist.GetUsuarioByIdAsync(idUsuario);
-            if (usuario is null) return null;
+            if (usuario == null) return null;
+
+            usuario.IdPerfil = inputModelUsuario.idPerfil;
+            usuario.IdPerfilNavigationIdPerfil = inputModelUsuario.idPerfil;
+            usuario.Nome = inputModelUsuario.nome;
+            usuario.Cpf = inputModelUsuario.cpf;
+            usuario.Login = inputModelUsuario.login;
+            usuario.Email = inputModelUsuario.email;
+            usuario.Telefone = inputModelUsuario.telefone ?? usuario.Telefone;
+            usuario.DtNascimento = inputModelUsuario.dtNascimento ?? usuario.DtNascimento;
 
             _geralPersist.Update(usuario);
 
@@ -119,7 +128,7 @@ public class UsuarioApplication : IUsuarioApplication
         }
         catch (Exception ex)
         {
-            throw new Exception($"Erro: {ex.Message}");
+            throw new Exception(ex.Message);
         }
     }
 
@@ -133,7 +142,7 @@ public class UsuarioApplication : IUsuarioApplication
         }
         catch (Exception ex)
         {
-            throw new Exception($"Erro: {ex.Message}");
+            throw new Exception(ex.Message);
         }
     }
 }
