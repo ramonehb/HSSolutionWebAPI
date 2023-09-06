@@ -50,12 +50,12 @@ public class UsuarioPersist : IUsuarioPersist
 
         if (bExisteLogin)
         {
-            mensagem += "Já existe esse login cadastro.";
+            mensagem += "Já existe esse login cadastrado.";
         }
 
         if (bExisteEmail && bExisteLogin)
         {
-            mensagem = "Login e E-mail já cadastro.";
+            mensagem = "Já existe esse login e e-mail cadastrado.";
         }
             
         return mensagem;
