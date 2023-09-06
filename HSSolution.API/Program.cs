@@ -13,6 +13,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.WithOrigins("http://localhost:8100")
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+});
+
+
 
 #region Application
 builder.Services.AddScoped<IUsuarioApplication, UsuarioApplication>();
@@ -93,4 +104,5 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+app.UseCors();
 app.Run();
