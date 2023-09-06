@@ -2,7 +2,6 @@
 using HSSolution.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Update;
 
 namespace HSSolution.API.Controllers;
 
