@@ -19,7 +19,6 @@ public class TokenPersist : ITokenPersist
     public async Task<(Usuario?, string, int)> AutenticaUsuario(string userName, string password)
     {       
         var usuarios = await _context.Usuarios
-            .AsNoTracking()
             .Where(u => u.Login == userName && u.Senha == password)
             .ToArrayAsync();
 
@@ -51,7 +50,7 @@ public class TokenPersist : ITokenPersist
             }
             else
             {
-                var usuario = usuarios.Single();
+                var usuario = usuarios.Single(u => u.FlHabilitado == true);
                 usuario.NrUltimoAcesso++;
                 usuario.DtUltimoAcesso = DateTime.Now;
 

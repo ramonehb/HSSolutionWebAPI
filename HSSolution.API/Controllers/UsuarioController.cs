@@ -2,6 +2,7 @@
 using HSSolution.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Update;
 
 namespace HSSolution.API.Controllers;
 
@@ -99,11 +100,23 @@ public class UsuarioController : ControllerBase
 
             if (bExistePerfil)
             {
-                if (string.IsNullOrEmpty(usuarioInputModel.senha)) return UnprocessableEntity("O campo senha é obrigatório");
+                if (string.IsNullOrEmpty(usuarioInputModel.senha))
+                {
+                    return UnprocessableEntity("O campo senha é obrigatório");
+                }
+
+                var mensagemRetorno = await _usuarioApplication.ValidaLoginEmail(usuarioInputModel.login, usuarioInputModel.email);
+                if (mensagemRetorno != string.Empty)
+                {
+                    return UnprocessableEntity(mensagemRetorno);
+                }
 
                 var usuarioCadastrado = await _usuarioApplication.AddUsuario(usuarioInputModel);
 
-                if (usuarioCadastrado == null) return UnprocessableEntity("Erro ao cadastrar usuário.");
+                if (usuarioCadastrado == null)
+                {
+                    return UnprocessableEntity("Erro ao cadastrar usuário.");
+                }
 
                 return Ok(usuarioCadastrado);
             }

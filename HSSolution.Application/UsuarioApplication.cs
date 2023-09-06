@@ -145,5 +145,19 @@ public class UsuarioApplication : IUsuarioApplication
             throw new Exception(ex.Message);
         }
     }
+
+    public async Task<string> ValidaLoginEmail(string login, string email)
+    {
+        try
+        {
+            return await _usuarioPersist.ValidaLoginEmail(login, email);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
+    }
+
+
 }
 

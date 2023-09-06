@@ -36,4 +36,28 @@ public class UsuarioPersist : IUsuarioPersist
     {
         return await _context.Perfils.AnyAsync(p => p.IdPerfil == idPerfil);
     }
+
+    public async Task<string> ValidaLoginEmail(string login, string email)
+    {
+        var mensagem = string.Empty;
+        var bExisteLogin = await _context.Usuarios.AnyAsync(u => u.Login == login);
+        var bExisteEmail = await _context.Usuarios.AnyAsync(u => u.Email == email);
+
+        if (bExisteEmail)
+        {
+            mensagem += "Já existe esse e-mail cadastrado. ";
+        }
+
+        if (bExisteLogin)
+        {
+            mensagem += "Já existe esse login cadastro.";
+        }
+
+        if (bExisteEmail && bExisteLogin)
+        {
+            mensagem = "Login e E-mail já cadastro.";
+        }
+            
+        return mensagem;
+    }
 }

@@ -15,5 +15,7 @@ public interface IUsuarioApplication
     Task<UsuarioViewModel?> GetUsuarioByIdAsync(int idUsuario);
 
     Task<bool> ValidaPerfil(int idPerfil);
+
+    Task<string> ValidaLoginEmail(string login, string email);
 }
 
